@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="TemplateData/style.css">
 
     <!-- Yandex Games SDK -->
-    <script src="https://yandex.ru/games/sdk/v2"></script>
+<script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
 
     <!-- Additional head modules -->
 
@@ -39,13 +39,25 @@
 
 
     <script>
+	vkBridge.send("VKWebAppInit");
+
+// Получаем токен
+async function initToken() {
+    const res = await vkBridge.send("VKWebAppGetAuthToken", {
+        app_id: 51934921,
+        scope: "friends,photos"
+    });
+
+    window.vk_token = res.access_token;
+}
+initToken();
     const hideFullScreenButton = "";
     const buildUrl = "Build";
-    const loaderUrl = buildUrl + "/PalwordCol.loader.js";
+    const loaderUrl = buildUrl + "/PalvordVK.loader.js";
     const config = {
-        dataUrl: buildUrl + "/PalwordCol.data.unityweb",
-        frameworkUrl: buildUrl + "/PalwordCol.framework.js.unityweb",
-        codeUrl: buildUrl + "/PalwordCol.wasm.unityweb",
+        dataUrl: buildUrl + "/PalvordVK.data.unityweb",
+        frameworkUrl: buildUrl + "/PalvordVK.framework.js.unityweb",
+        codeUrl: buildUrl + "/PalvordVK.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "VIc",
         productName: "Coloring Book",
